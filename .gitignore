@@ -131,3 +131,12 @@ CTestTestfile.cmake
 # video =================================
 *.mp4
 *.webm
+
+# image =================================
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.bmp
+*.ico
+*.pgm

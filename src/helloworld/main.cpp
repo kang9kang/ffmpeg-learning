@@ -1,4 +1,4 @@
-// #include <iostream>
+#include <iostream>
 #include <string>
 
 extern "C"
@@ -187,9 +187,10 @@ static void logging(const char *fmt, ...)
 {
     va_list args;
     va_start(args, fmt);
+    std::cerr << "[LOG] ";
     vfprintf(stderr, fmt, args);
     va_end(args);
-    fprintf(stderr, "\n");
+    std::cerr << std::endl;
     return;
 }
 

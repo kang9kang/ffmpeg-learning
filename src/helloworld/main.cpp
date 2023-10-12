@@ -8,6 +8,8 @@ extern "C"
 #include <libavutil/frame.h>
 }
 
+#include "config.h"
+
 static void logging(const char *fmt, ...);
 
 static int decode_packet(AVPacket *pPacket, AVCodecContext *pCodecContext, AVFrame *pFrame);
@@ -18,7 +20,9 @@ int main(int argc, char *argv[])
 {
     if (argc < 2)
     {
-        logging("Please provide a movie file");
+        std::cout << argv[0] << " Version " << Tutorial_VERSION_MAJOR << "." << Tutorial_VERSION_MINOR << std::endl;
+        std::cout << "Usage: " << argv[0] << " number" << std::endl;
+        std::cout << "You need to pass at least one parameter as the input file path." << std::endl;
         return -1;
     }
 

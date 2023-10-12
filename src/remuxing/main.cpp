@@ -5,13 +5,25 @@ extern "C"
 #include <libavformat/avformat.h>
 }
 
+#include "config.h"
+
 int main(int argc, char *argv[])
 {
+    if (argc < 2)
+    {
+        // report version
+        std::cout << argv[0] << " Version " << Tutorial_VERSION_MAJOR << "." << Tutorial_VERSION_MINOR << std::endl;
+        std::cout << "Usage: " << argv[0] << " number" << std::endl;
+        std::cout << "You need to pass at least two parameter as the input file path and the output file path."
+                  << std::endl;
+        return -1;
+    }
 
     int fragmented_mp4_options = 0;
     if (argc < 3)
     {
-        printf("You need to pass at least two parameters.\n");
+        std::cout << "You need to pass at least two parameter as the input file path and the output file path."
+                  << std::endl;
         return -1;
     }
     else if (argc == 4)

@@ -128,19 +128,6 @@ compile_commands.json
 CTestTestfile.cmake
 
 
-# video =================================
-*.mp4
-*.webm
-*.ts
-
-# image =================================
-*.png
-*.jpg
-*.jpeg
-*.gif
-*.bmp
-*.ico
-*.pgm
 
 # Prerequisites
 *.d

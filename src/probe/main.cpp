@@ -176,7 +176,7 @@ int main(int argc, char *argv[])
         av_packet_unref(pPacket);
     }
 
-    logging("Demuxing succeeded. %d frames decoded", frame_count);
+    logging("Demux succeeded. %d frames decoded", frame_count);
 
     logging("Releasing resources");
     avformat_close_input(&pFormatContext);

@@ -162,7 +162,7 @@ int main(int argc, char *argv[])
             ret = av_interleaved_write_frame(output_format_context, &packet);
             if (ret < 0)
             {
-                std::cerr << "Error muxing packet" << std::endl;
+                std::cerr << "Error mux packet" << std::endl;
                 break;
             }
             av_packet_unref(&packet);

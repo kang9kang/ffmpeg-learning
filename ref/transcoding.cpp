@@ -1,13 +1,6 @@
+#include <iostream>
+
 #include "video_debugging.h"
-#include <inttypes.h>
-#include <libavcodec/avcodec.h>
-#include <libavformat/avformat.h>
-#include <libavutil/opt.h>
-#include <libavutil/timestamp.h>
-#include <stdarg.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
 typedef struct StreamingParams
 {
@@ -38,7 +31,7 @@ typedef struct StreamingContext
 
 int fill_stream_info(AVStream *avs, AVCodec **avc, AVCodecContext **avcc)
 {
-    *avc = avcodec_find_decoder(avs->codecpar->codec_id);
+    *avc = const_cast<AVCodec *>(avcodec_find_decoder(avs->codecpar->codec_id));
     if (!*avc)
     {
         logging("failed to find the codec");
@@ -174,7 +167,7 @@ int prepare_audio_encoder(StreamingContext *sc, int sample_rate, StreamingParams
 {
     sc->audio_avs = avformat_new_stream(sc->avfc, NULL);
 
-    sc->audio_avc = avcodec_find_encoder_by_name(sp.audio_codec);
+    sc->audio_avc = const_cast<AVCodec *>(avcodec_find_encoder_by_name(sp.audio_codec));
     if (!sc->audio_avc)
     {
         logging("could not find the proper codec");
@@ -251,7 +244,7 @@ int encode_video(StreamingContext *decoder, StreamingContext *encoder, AVFrame *
         }
         else if (response < 0)
         {
-            logging("Error while receiving packet from encoder: %s", av_err2str(response));
+            logging("Error while receiving packet from encoder");
             return -1;
         }
 
@@ -263,7 +256,7 @@ int encode_video(StreamingContext *decoder, StreamingContext *encoder, AVFrame *
         response = av_interleaved_write_frame(encoder->avfc, output_packet);
         if (response != 0)
         {
-            logging("Error %d while receiving packet from decoder: %s", response, av_err2str(response));
+            logging("Error %d while receiving packet from decoder", response);
             return -1;
         }
     }
@@ -292,7 +285,7 @@ int encode_audio(StreamingContext *decoder, StreamingContext *encoder, AVFrame *
         }
         else if (response < 0)
         {
-            logging("Error while receiving packet from encoder: %s", av_err2str(response));
+            logging("Error while receiving packet from encoder");
             return -1;
         }
 
@@ -302,7 +295,7 @@ int encode_audio(StreamingContext *decoder, StreamingContext *encoder, AVFrame *
         response = av_interleaved_write_frame(encoder->avfc, output_packet);
         if (response != 0)
         {
-            logging("Error %d while receiving packet from decoder: %s", response, av_err2str(response));
+            logging("Error %d while receiving packet from decoder", response);
             return -1;
         }
     }
@@ -316,7 +309,7 @@ int transcode_audio(StreamingContext *decoder, StreamingContext *encoder, AVPack
     int response = avcodec_send_packet(decoder->audio_avcc, input_packet);
     if (response < 0)
     {
-        logging("Error while sending packet to decoder: %s", av_err2str(response));
+        logging("Error while sending packet to decoder");
         return response;
     }
 
@@ -329,7 +322,7 @@ int transcode_audio(StreamingContext *decoder, StreamingContext *encoder, AVPack
         }
         else if (response < 0)
         {
-            logging("Error while receiving frame from decoder: %s", av_err2str(response));
+            logging("Error while receiving frame from decoder");
             return response;
         }
 
@@ -348,7 +341,7 @@ int transcode_video(StreamingContext *decoder, StreamingContext *encoder, AVPack
     int response = avcodec_send_packet(decoder->video_avcc, input_packet);
     if (response < 0)
     {
-        logging("Error while sending packet to decoder: %s", av_err2str(response));
+        logging("Error while sending packet to decoder");
         return response;
     }
 
@@ -361,7 +354,7 @@ int transcode_video(StreamingContext *decoder, StreamingContext *encoder, AVPack
         }
         else if (response < 0)
         {
-            logging("Error while receiving frame from decoder: %s", av_err2str(response));
+            logging("Error while receiving frame from decoder");
             return response;
         }
 

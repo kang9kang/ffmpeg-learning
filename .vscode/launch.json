@@ -5,16 +5,45 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "probe",
             "type": "cppdbg",
             "request": "launch",
-            "name": "gdb",
-            "program": "${workspaceFolder}/bin/transcoding",
+            "program": "${workspaceFolder}/bin/probe",
             "MIMode": "gdb",
             "cwd": "${workspaceFolder}",
+            "stopAtEntry": false,
+            "externalConsole": false,
             "args": [
                 "video/small_bunny_1080p_60fps.mp4",
-                "video/bunny_1s_gop.mp4"
-            ]
-        }
+            ],
+        },
+        {
+            "name": "remux",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/bin/remux",
+            "MIMode": "gdb",
+            "cwd": "${workspaceFolder}",
+            "stopAtEntry": false,
+            "externalConsole": false,
+            "args": [
+                "video/small_bunny_1080p_60fps.mp4",
+                "video/remuxed_small_bunny_1080p_60fps.ts",
+            ],
+        },
+        {
+            "name": "transcode",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/bin/transcode",
+            "MIMode": "gdb",
+            "cwd": "${workspaceFolder}",
+            "stopAtEntry": false,
+            "externalConsole": false,
+            "args": [
+                "video/small_bunny_1080p_60fps.mp4",
+                "video/bunny_1s_gop.mp4",
+            ],
+        },
     ]
 }

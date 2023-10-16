@@ -1,8 +1,8 @@
 
-add_subdirectory(helloworld)
+add_subdirectory(probe)
 
-add_subdirectory(remuxing)
+add_subdirectory(remux)
 
-add_subdirectory(transcoding)
+add_subdirectory(transcode)
 
 

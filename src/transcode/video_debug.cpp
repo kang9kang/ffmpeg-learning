@@ -1,4 +1,4 @@
-#include "video_debugging.h"
+#include "video_debug.h"
 
 void logging(const char *fmt, ...)
 {
